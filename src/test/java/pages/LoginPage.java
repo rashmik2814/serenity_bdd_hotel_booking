@@ -15,7 +15,7 @@ public class LoginPage extends PageObject {
     @FindBy(id = "login")
     WebElement loginButton;
 
-    @FindBy(css = "a[href=\"Logout.php\"]")
+    @FindBy(css = "a[href='Logout.php']")
     WebElement logoutButton;
 
     public void login(String username, String password) {
