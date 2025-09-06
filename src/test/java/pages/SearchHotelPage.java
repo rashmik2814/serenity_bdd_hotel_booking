@@ -38,6 +38,9 @@ public class SearchHotelPage extends PageObject {
     @FindBy(css = "input[id=\"hotel_name_0\"]")
     WebElement firstHotelName;
 
+    @FindBy(css = "a[href=\"Logout.php\"]")
+    WebElement logoutButton;
+
     public void searchHotel(Map<String, String> params) {
         selectByVisibleText(locationDropdown, params.get("location"));
         selectByVisibleText(hotelDropdown, params.get("hotelName"));
@@ -64,6 +67,9 @@ public class SearchHotelPage extends PageObject {
     public String getSelectedHotelName() {
         // Return hotel name displayed in results
         return (firstHotelName).getAttribute("value");
+    }
+    public void logout() {
+        logoutButton.click();
     }
 }
 

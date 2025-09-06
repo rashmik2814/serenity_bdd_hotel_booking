@@ -4,6 +4,7 @@ Feature: Hotel Booking
     Given the user is on the login page
     When the user logs in with username "rashmikhedkar" and password "Rashmi@123"
     Then the user should be logged in successfully
+    Then the user should click on logout button and verify the logout message
 
   Scenario: Verify hotel search functionality
     Given the user is on the login page
@@ -17,7 +18,7 @@ Feature: Hotel Booking
       | checkOutDate  | 11/12/2024     |
       | adults        | 1 - One        |
       | children      | 1 - One        |
-    Then the hotel search results should display the correct hotel
+    Then the hotel search results should display "Hotel Sunshineee"
 
   Scenario: Verify hotel booking functionality
     Given the user is on the login page

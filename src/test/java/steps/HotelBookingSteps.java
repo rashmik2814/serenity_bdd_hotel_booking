@@ -3,6 +3,7 @@ package steps;
 import io.cucumber.java.en.*;
 import io.cucumber.datatable.DataTable;
 import pages.LoginPage;
+import pages.LogoutPage;
 import pages.SearchHotelPage;
 import pages.BookHotelPage;
 import static org.junit.Assert.assertEquals;
@@ -14,6 +15,7 @@ public class HotelBookingSteps {
     LoginPage loginPage = new LoginPage();
     SearchHotelPage searchHotelPage = new SearchHotelPage();
     BookHotelPage bookHotelPage = new BookHotelPage();
+    LogoutPage logoutPage = new LogoutPage();
 
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
@@ -32,10 +34,10 @@ public class HotelBookingSteps {
         assert loginPage.isUserLoggedIn();
     }
 
-    @Then("the hotel search results should display the correct hotel")
-    public void the_hotel_search_results_should_display_the_correct_hotel() {
+    @Then("the hotel search results should display {string}")
+    public void the_hotel_search_results_should_display(String hotelName) {
         String selectedHotel = searchHotelPage.getSelectedHotelName();
-        assertEquals("Hotel Sunshine", selectedHotel);
+        assertEquals(hotelName, selectedHotel);
     }
 
     @When("the user searches for a hotel with:")
@@ -61,5 +63,11 @@ public class HotelBookingSteps {
     public void the_booking_should_be_successful() {
         System.out.println("Verifying booking success");
         bookHotelPage.verifyBookingSuccess();
+    }
+    @Then("the user should click on logout button and verify the logout message")
+    public void the_user_should_click_on_logout_button_and_verify_the_logout_message() {
+        System.out.println("Clicking logout button");
+        searchHotelPage.logout();
+        assert logoutPage.isUserLoggedOut();
     }
 }
