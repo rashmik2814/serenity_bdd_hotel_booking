@@ -3,6 +3,8 @@ package pages;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Map;
@@ -18,7 +20,8 @@ public class BookHotelPage extends PageObject {
     @FindBy(id = "address")
     WebElement billingAddressField;
 
-    @FindBy(id = "cc_num")
+   // @FindBy(id = "cc_num")
+    @FindBy(css = "input[id='cc_num']")
     WebElement creditCardNumberField;
 
     @FindBy(id = "cc_type")
@@ -36,8 +39,8 @@ public class BookHotelPage extends PageObject {
     @FindBy(id = "book_now")
     WebElement bookNowButton;
 
-    @FindBy(id = "#order_no")
-    WebElement orderNumberField;
+    @FindBy(css = "a[href='Logout.php']")
+    WebElement logoutButton;
 
     public void bookHotel(Map<String, String> details) {
         firstNameField.sendKeys(details.get("firstName"));
@@ -49,16 +52,21 @@ public class BookHotelPage extends PageObject {
         selectByVisibleText(expiryYearDropdown, details.get("expiryYear"));
         cvvField.sendKeys(details.get("cvv"));
         bookNowButton.click();
+        waitForBookingConfirmationPage();
     }
 
-    public void verifyBookingSuccess() {
-        withTimeoutOf(Duration.ofSeconds(10)).waitFor(orderNumberField);
-        assert orderNumberField.isDisplayed();
-   }
+    public boolean isLoginConfirmed()
+    {
+        return logoutButton.isDisplayed();
+    }
 
-    private void selectByVisibleText(WebElement dropdown, String visibleText) {
+    public void selectByVisibleText(WebElement dropdown, String visibleText) {
         org.openqa.selenium.support.ui.Select select = new org.openqa.selenium.support.ui.Select(dropdown);
         select.selectByVisibleText(visibleText);
     }
-}
 
+    public void waitForBookingConfirmationPage() {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(org.openqa.selenium.By.id("order_no")));
+    }
+}

@@ -15,16 +15,25 @@ public class LoginPage extends PageObject {
     @FindBy(id = "login")
     WebElement loginButton;
 
-    @FindBy(css = "a[href='Logout.php']")
-    WebElement logoutButton;
 
-    public void login(String username, String password) {
-        usernameField.sendKeys(username);
+
+    public void doLogin(String username, String password)
+    {
+        usernameField.clear();
+        usernameField .sendKeys(username);
         passwordField.sendKeys(password);
+        loginButton.isDisplayed();
         loginButton.click();
+
     }
-    public boolean isUserLoggedIn() {
-        return(logoutButton).isDisplayed();
+
+    public  int doAddition (int a, int b)
+    {
+     int c = a + b;
+        System.out.println("Addition is: " + c);
+        return c;
     }
+
+
 }
 
